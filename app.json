@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "TAPSAKAY Demo",
+    "slug": "tapsakay",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/favicon/web-app-manifest-512x512.png",
+    "scheme": "tapsakay",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/favicon/web-app-manifest-512x512.png"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/favicon/web-app-manifest-512x512.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/favicon/favicon-96x96.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/favicon/web-app-manifest-512x512.png",
+          "imageWidth": 220
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8595bc18-3fea-4074-a682-8ba21077ddf8"
+      }
+    },
+    "owner": "meruuuuooo"
+  }
+}

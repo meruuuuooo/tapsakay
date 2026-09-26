@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"outline-variant":"#e6bdb9","on-error":"#ffffff","surface-container":"#e5efff","on-secondary":"#ffffff","on-surface-variant":"#5c403d","primary-fixed":"#ffdad6","amber-tint":"#e6c87d","outline":"#916f6c","error":"#ba1a1a","on-tertiary-fixed-variant":"#5f4100","secondary-fixed":"#d8e2ff","background":"#f8f9ff","on-error-container":"#93000a","on-tertiary":"#ffffff","surface-dim":"#cadbf4","on-secondary-fixed":"#001a42","navy-deep":"#04377b","surface":"#f8f9ff","accent-red-tint":"#db989c","on-secondary-container":"#194387","primary-container":"#bb0019","action-red":"#e3202a","primary":"#8e0010","inverse-surface":"#213244","on-tertiary-container":"#ffcd77","tertiary-fixed-dim":"#f1bf67","on-secondary-fixed-variant":"#1b4588","surface-tint":"#bf061b","secondary-container":"#90b3fe","on-tertiary-fixed":"#271900","surface-variant":"#d3e4fd","blue-gray-muted":"#8d9eb5","on-primary":"#ffffff","secondary-fixed-dim":"#aec6ff","on-surface":"#0b1d2f","error-container":"#ffdad6","on-primary-fixed-variant":"#930011","primary-fixed-dim":"#ffb3ad","inverse-on-surface":"#e9f1ff","on-primary-fixed":"#410003","surface-container-high":"#dbe9ff","tertiary-fixed":"#ffdeaa","on-background":"#0b1d2f","surface-container-low":"#eef4ff","canvas-base":"#e2e1e1","tertiary-container":"#7a5500","secondary":"#385da2","surface-container-lowest":"#ffffff","amber-status":"#f4ae0b","action-red-hover":"#d74850","inverse-primary":"#ffb3ad","surface-container-highest":"#d3e4fd","tertiary":"#5c3f00","navy-slate":"#375887","surface-bright":"#f8f9ff","on-primary-container":"#ffc7c2"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"1rem","space-xs":"0.25rem","space-lg":"1.25rem","space-sm":"0.5rem","space-md":"1rem","space-xl":"1.75rem","gutter":"1rem"},fontFamily:{"label-lg":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"]},fontSize:{"label-lg":["15px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"800"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"28px","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"24px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}}</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(4,55,123,0.06)]"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Navigation Menu" class="w-11 h-11 flex items-center justify-center rounded-full text-navy-deep hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex flex-col"><span class="font-label-sm text-label-sm uppercase tracking-wider text-navy-slate font-bold">Tapsakay Driver</span><h1 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Home / Status</h1></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high"><span class="w-2 h-2 rounded-full bg-amber-status animate-pulse"></span><span class="font-label-sm text-label-sm text-navy-deep font-bold">Online</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full px-gutter pb-8 gap-space-md">
+<!-- Driver Quick Status & Shift Overview Strip -->
+<div class="w-full flex items-center justify-between p-3.5 bg-surface-container-lowest rounded-xl shadow-[0_2px_12px_rgba(4,55,123,0.06)]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-navy-deep">
+<span class="material-symbols-outlined text-[22px]">badge</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-navy-deep">Juan Dela Cruz</span>
+<span class="material-symbols-outlined text-amber-status text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-navy-slate font-medium">Shift active · 4h 12m on road</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-sm text-label-sm text-navy-slate uppercase tracking-wider">Today's Total</span>
+<span class="font-label-lg text-label-lg text-action-red font-extrabold">₱ 680.00</span>
+</div>
+</div>
+<!-- Online Mode Hero Toggle Card -->
+<div class="w-full bg-navy-deep text-on-secondary rounded-xl p-space-md shadow-[0_4px_16px_rgba(4,55,123,0.18)] flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative flex items-center justify-center">
+<span class="w-3.5 h-3.5 rounded-full bg-amber-status animate-ping absolute opacity-75"></span>
+<span class="w-3.5 h-3.5 rounded-full bg-amber-status relative"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-surface-container-lowest uppercase tracking-wider">ONLINE &amp; ACTIVE</span>
+<span class="font-body-sm text-body-sm text-surface-container-high">Ready to receive nearby ride requests</span>
+</div>
+</div>
+<!-- Interactive Toggle Switch -->
+<button aria-label="Toggle Online Status" class="w-14 h-8 bg-action-red rounded-full p-1 transition-all duration-300 flex items-center justify-end shadow-inner focus:outline-none" id="online-toggle-btn">
+<div class="w-6 h-6 rounded-full bg-surface-container-lowest shadow-md transform transition-transform duration-300"></div>
+</button>
+</div>
+<!-- Vehicle & Assigned Route Card -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-[0_2px_8px_rgba(4,55,123,0.06)] flex flex-col gap-3.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<!-- Motorela Graphic / Image Container -->
+<div class="w-16 h-14 rounded-lg bg-surface-container-high overflow-hidden flex items-center justify-center relative p-1">
+<img class="w-full h-full object-contain" data-alt="Stylized illustration of a traditional Filipino Motorela public shuttle in vibrant cyan green with yellow pinstripe decals and soft tinted cabin windows against a bright studio canvas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoIiVkNm6kUNnPHQiqygtZXGeCu70yhWTr7NI562yv750YEKQDBDdWa8NSKIsiDL5Ac-kSIFL7reKQb_A5DXRfppD408l62o7rC__fFBd__-BumbzW2VWLUQqK1MxcYiIo3hXVRjkrvyDSIz8FJGKlDuoILouSBFP24xtT-_DZT_fqG-6zQkG92WyGf0tcHKtoDdRtUhk7j2fOSbtqNmvAMVaSfHCa2PoMqzha8XFDnGlBJr1tPvE"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-navy-deep font-bold">Rela #12</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-navy-deep font-label-sm text-label-sm font-bold">Plate 482-CDO</span>
+</div>
+<span class="font-body-sm text-body-sm text-navy-slate font-medium">Assigned Route: <strong class="text-navy-deep font-bold">Route A · CBM Express</strong></span>
+</div>
+</div>
+<a class="px-3 py-1.5 rounded-lg bg-surface-container text-navy-deep font-label-md text-label-md flex items-center gap-1 hover:bg-surface-container-high transition-colors" href="#">
+<span>Map</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</div>
+<!-- Route Path Snippet Micro-Timeline -->
+<div class="w-full bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-action-red text-[18px]">pin_drop</span>
+<span class="font-label-sm text-label-sm text-navy-deep truncate font-semibold">Station 1 (CBM)</span>
+</div>
+<span class="material-symbols-outlined text-blue-gray-muted text-[16px]">arrow_forward</span>
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-secondary text-[18px]">location_on</span>
+<span class="font-label-sm text-label-sm text-navy-deep truncate font-semibold">Station 5 (Terminal)</span>
+</div>
+</div>
+</div>
+<!-- Capacity & Seating Bento Hero (The Core Delight) -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_4px_18px_rgba(4,55,123,0.08)] flex flex-col items-center justify-center text-center gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-navy-slate text-[20px]">airline_seat_recline_normal</span>
+<span class="font-label-lg text-label-lg uppercase tracking-wider text-navy-slate">CURRENT PASSENGERS</span>
+</div>
+<!-- Massive Capacity Count Display -->
+<div class="flex items-baseline justify-center gap-2">
+<span class="font-headline-xl text-[64px] leading-none text-navy-deep font-extrabold tracking-tight" id="passenger-count">5</span>
+<span class="font-headline-lg text-headline-lg text-blue-gray-muted font-bold">/ 8</span>
+</div>
+<!-- Vivid Status Banner -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-tint/30 text-tertiary">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-status"></span>
+<span class="font-label-md text-label-md font-bold">3 SEATS AVAILABLE</span>
+</div>
+<!-- Visual Interactive Seat Grid (Rela Cabin 2x4 Layout) -->
+<div class="w-full max-w-[260px] pt-2 flex flex-col gap-2">
+<div class="flex items-center justify-between text-navy-slate font-label-sm text-label-sm px-1">
+<span>Left Bench</span>
+<span>Right Bench</span>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<!-- Left Side Seats (4 slots) -->
+<div class="h-8 rounded bg-action-red flex items-center justify-center text-on-primary shadow-sm" title="Occupied Seat 1">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="h-8 rounded bg-action-red flex items-center justify-center text-on-primary shadow-sm" title="Occupied Seat 2">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="h-8 rounded bg-action-red flex items-center justify-center text-on-primary shadow-sm" title="Occupied Seat 3">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="h-8 rounded bg-action-red flex items-center justify-center text-on-primary shadow-sm" title="Occupied Seat 4">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<!-- Right Side Seats (4 slots: 1 occupied, 3 open) -->
+<div class="h-8 rounded bg-action-red flex items-center justify-center text-on-primary shadow-sm" title="Occupied Seat 5">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<div class="h-8 rounded bg-surface-container-high flex items-center justify-center text-navy-slate" title="Empty Seat 6">
+<span class="font-label-sm text-label-sm font-bold">6</span>
+</div>
+<div class="h-8 rounded bg-surface-container-high flex items-center justify-center text-navy-slate" title="Empty Seat 7">
+<span class="font-label-sm text-label-sm font-bold">7</span>
+</div>
+<div class="h-8 rounded bg-surface-container-high flex items-center justify-center text-navy-slate" title="Empty Seat 8">
+<span class="font-label-sm text-label-sm font-bold">8</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Station Radar & Mini Location Card -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-[0_2px_8px_rgba(4,55,123,0.06)] flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-action-red">
+<span class="material-symbols-outlined text-[28px]">explore</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-sm text-label-sm text-navy-slate uppercase tracking-wider block font-semibold">Current Heading</span>
+<span class="font-headline-sm text-headline-sm text-navy-deep truncate block">Sayre Highway Northbound</span>
+<span class="font-body-sm text-body-sm text-navy-slate">Cruising speed ~ 22 km/h</span>
+</div>
+<div class="text-right">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-navy-deep font-label-sm text-label-sm font-bold">Live GPS</span>
+</div>
+</div>
+<!-- Primary Route Departure Action CTA -->
+<div class="w-full flex flex-col gap-2 pt-1">
+<button class="w-full min-h-[58px] bg-secondary hover:bg-navy-deep active:scale-[0.99] text-on-secondary rounded-xl font-label-lg text-label-lg shadow-[0_6px_20px_rgba(4,55,123,0.22)] transition-all flex flex-col items-center justify-center p-3">
+<div class="flex items-center gap-2">
+<span>Arrive at Next Station</span>
+<span class="material-symbols-outlined text-[20px]">near_me</span>
+</div>
+<span class="font-body-sm text-body-sm opacity-90 font-normal">CMU Main Gate (1.2 km away)</span>
+</button>
+<div class="flex items-center justify-between px-2 pt-1">
+<button class="flex items-center gap-1.5 text-navy-slate hover:text-action-red transition-colors font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">emergency</span>
+<span>Driver Assistance</span>
+</button>
+<span class="font-body-sm text-body-sm text-blue-gray-muted">Queue #04 at station</span>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const toggleBtn = document.getElementById('online-toggle-btn');
+    if (toggleBtn) {
+      let isOnline = true;
+      toggleBtn.addEventListener('click', function() {
+        isOnline = !isOnline;
+        if (isOnline) {
+          toggleBtn.className = 'w-14 h-8 bg-action-red rounded-full p-1 transition-all duration-300 flex items-center justify-end shadow-inner focus:outline-none';
+        } else {
+          toggleBtn.className = 'w-14 h-8 bg-blue-gray-muted rounded-full p-1 transition-all duration-300 flex items-center justify-start shadow-inner focus:outline-none';
+        }
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(4,55,123,0.08)]" data-active-classes="text-action-red font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="home-status" href="#"><span class="material-symbols-outlined text-[22px]">speed</span><span class="font-label-sm text-label-sm">Home</span></a><a class="relative min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="new-passenger-request" href="#"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-2 w-4 h-4 rounded-full bg-action-red text-on-primary text-[10px] font-bold flex items-center justify-center">1</span><span class="font-label-sm text-label-sm">Requests</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="pickup-passengers" href="#"><span class="material-symbols-outlined text-[22px]">group</span><span class="font-label-sm text-label-sm">Passengers</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="during-trip" href="#"><span class="material-symbols-outlined text-[22px]">near_me</span><span class="font-label-sm text-label-sm">Route</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="menu-settings" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm">Menu</span></a></div></nav></body></html>

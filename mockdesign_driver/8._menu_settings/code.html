@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"outline-variant":"#e6bdb9","on-error":"#ffffff","surface-container":"#e5efff","on-secondary":"#ffffff","on-surface-variant":"#5c403d","primary-fixed":"#ffdad6","amber-tint":"#e6c87d","outline":"#916f6c","error":"#ba1a1a","on-tertiary-fixed-variant":"#5f4100","secondary-fixed":"#d8e2ff","background":"#f8f9ff","on-error-container":"#93000a","on-tertiary":"#ffffff","surface-dim":"#cadbf4","on-secondary-fixed":"#001a42","navy-deep":"#04377b","surface":"#f8f9ff","accent-red-tint":"#db989c","on-secondary-container":"#194387","primary-container":"#bb0019","action-red":"#e3202a","primary":"#8e0010","inverse-surface":"#213244","on-tertiary-container":"#ffcd77","tertiary-fixed-dim":"#f1bf67","on-secondary-fixed-variant":"#1b4588","surface-tint":"#bf061b","secondary-container":"#90b3fe","on-tertiary-fixed":"#271900","surface-variant":"#d3e4fd","blue-gray-muted":"#8d9eb5","on-primary":"#ffffff","secondary-fixed-dim":"#aec6ff","on-surface":"#0b1d2f","error-container":"#ffdad6","on-primary-fixed-variant":"#930011","primary-fixed-dim":"#ffb3ad","inverse-on-surface":"#e9f1ff","on-primary-fixed":"#410003","surface-container-high":"#dbe9ff","tertiary-fixed":"#ffdeaa","on-background":"#0b1d2f","surface-container-low":"#eef4ff","canvas-base":"#e2e1e1","tertiary-container":"#7a5500","secondary":"#385da2","surface-container-lowest":"#ffffff","amber-status":"#f4ae0b","action-red-hover":"#d74850","inverse-primary":"#ffb3ad","surface-container-highest":"#d3e4fd","tertiary":"#5c3f00","navy-slate":"#375887","surface-bright":"#f8f9ff","on-primary-container":"#ffc7c2"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"1rem","space-xs":"0.25rem","space-lg":"1.25rem","space-sm":"0.5rem","space-md":"1rem","space-xl":"1.75rem","gutter":"1rem"},fontFamily:{"label-lg":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"]},fontSize:{"label-lg":["15px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"700"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"800"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"28px","fontWeight":"700"}],"headline-sm":["18px",{"lineHeight":"24px","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}}</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(4,55,123,0.06)]"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Navigation Menu" class="w-11 h-11 flex items-center justify-center rounded-full text-navy-deep hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex flex-col"><span class="font-label-sm text-label-sm uppercase tracking-wider text-navy-slate font-bold">Tapsakay Driver</span><h1 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Menu / Settings</h1></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high"><span class="w-2 h-2 rounded-full bg-amber-status animate-pulse"></span><span class="font-label-sm text-label-sm text-navy-deep font-bold">Online</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full">
+<div class="w-full max-w-[480px] mx-auto px-margin py-space-sm flex flex-col gap-space-md">
+<!-- Driver Mini Profile Card -->
+<a class="w-full bg-inverse-surface rounded-xl p-space-md shadow-md flex items-center justify-between transition-transform active:scale-[0.98]" href="#">
+<div class="flex items-center gap-space-md">
+<div class="relative w-14 h-14 rounded-full overflow-hidden bg-navy-slate flex-shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Professional portrait headshot of a friendly Filipino public transport driver in casual uniform with genuine warm smile, studio lighting, cinematic, high contrast, clean backdrop with navy undertones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9Kobogfsl7XOTDcG7PC_DU9L__H_ycbvDruaj7jaTyg9pnovtZE6GAHp6-d9Yi7kQ_4s7HJJYR3roCTYUndz2mg1NPEj9IBvWM2jOrr9Rxdpc0TFqpcaYge1nKSox2iIaSkwVV4iD_rUAuzb6O5TPPbkGapIK5cS6aD4u9uKnNSRvpQZoxTQgzar9v_6Gg0Hr7zo2PHmaompzvnYbLPvwG1C5VdHUhQjWyC8RPFnm60raKUpb10U"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-amber-status shadow-sm"></div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-inverse-on-surface truncate">Juan Dela Cruz</span>
+<span class="material-symbols-outlined text-[18px] text-amber-status" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-blue-gray-muted truncate">Rela #12 • Route A</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-inverse-surface/80 flex items-center justify-center text-blue-gray-muted">
+<span class="material-symbols-outlined text-[22px]">chevron_right</span>
+</div>
+</a>
+<!-- Driver Quick Stats Ribbon -->
+<div class="grid grid-cols-3 gap-space-xs bg-inverse-surface rounded-xl p-space-sm shadow-sm text-center">
+<div class="flex flex-col items-center py-1">
+<span class="font-headline-sm text-headline-sm text-inverse-on-surface">4.9</span>
+<div class="flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-amber-status" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-blue-gray-muted">Rating</span>
+</div>
+</div>
+<div class="flex flex-col items-center py-1 bg-surface-container-high/10 rounded-lg">
+<span class="font-headline-sm text-headline-sm text-inverse-on-surface">1,248</span>
+<div class="flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">swap_calls</span>
+<span class="font-label-sm text-label-sm text-blue-gray-muted">Trips</span>
+</div>
+</div>
+<div class="flex flex-col items-center py-1">
+<span class="font-headline-sm text-headline-sm text-inverse-on-surface">₱480</span>
+<div class="flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-amber-tint">payments</span>
+<span class="font-label-sm text-label-sm text-blue-gray-muted">Today</span>
+</div>
+</div>
+</div>
+<!-- Main Navigation Menu Options -->
+<div class="flex flex-col gap-space-xs">
+<span class="px-space-xs font-label-sm text-label-sm uppercase tracking-wider text-navy-slate font-bold">Trip Operations</span>
+<!-- Route Overview -->
+<a class="w-full bg-inverse-surface hover:bg-inverse-surface/90 text-inverse-on-surface rounded-xl px-space-md py-3.5 flex items-center justify-between shadow-sm transition-all active:scale-[0.99]" href="#">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">map</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-inverse-on-surface">Route Overview</span>
+<span class="font-body-sm text-body-sm text-blue-gray-muted">CBM – CMU Gate – Market</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-blue-gray-muted">chevron_right</span>
+</a>
+<!-- Passenger List -->
+<a class="w-full bg-inverse-surface hover:bg-inverse-surface/90 text-inverse-on-surface rounded-xl px-space-md py-3.5 flex items-center justify-between shadow-sm transition-all active:scale-[0.99]" href="#">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">group</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg text-inverse-on-surface">Passenger List</span>
+<span class="px-2 py-0.5 rounded-full bg-action-red text-on-primary font-label-sm text-label-sm">5 Onboard</span>
+</div>
+<span class="font-body-sm text-body-sm text-blue-gray-muted">Manage active manifests &amp; fares</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-blue-gray-muted">chevron_right</span>
+</a>
+<!-- Trip History -->
+<a class="w-full bg-inverse-surface hover:bg-inverse-surface/90 text-inverse-on-surface rounded-xl px-space-md py-3.5 flex items-center justify-between shadow-sm transition-all active:scale-[0.99]" href="#">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">history</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-inverse-on-surface">Trip History</span>
+<span class="font-body-sm text-body-sm text-blue-gray-muted">Past shifts and weekly remits</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-blue-gray-muted">chevron_right</span>
+</a>
+</div>
+<!-- System & Settings Group -->
+<div class="flex flex-col gap-space-xs mt-1">
+<span class="px-space-xs font-label-sm text-label-sm uppercase tracking-wider text-navy-slate font-bold">Preferences</span>
+<!-- Device Settings -->
+<a class="w-full bg-inverse-surface hover:bg-inverse-surface/90 text-inverse-on-surface rounded-xl px-space-md py-3.5 flex items-center justify-between shadow-sm transition-all active:scale-[0.99]" href="#">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-inverse-on-surface">Device Settings</span>
+<span class="font-body-sm text-body-sm text-blue-gray-muted">GPS accuracy, sound alerts &amp; NFC</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-blue-gray-muted">chevron_right</span>
+</a>
+<!-- Terminal Announcements / Dispatch -->
+<a class="w-full bg-inverse-surface hover:bg-inverse-surface/90 text-inverse-on-surface rounded-xl px-space-md py-3.5 flex items-center justify-between shadow-sm transition-all active:scale-[0.99]" href="#">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high/15 text-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">campaign</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-inverse-on-surface">Cooperative Notices</span>
+<span class="font-body-sm text-body-sm text-blue-gray-muted">Terminal updates &amp; schedule shift</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-blue-gray-muted">chevron_right</span>
+</a>
+</div>
+<!-- Offline Action Button -->
+<div class="pt-space-sm">
+<button class="w-full bg-inverse-surface hover:bg-inverse-surface/80 rounded-xl px-space-md py-4 flex items-center justify-center gap-space-sm shadow-md transition-all active:scale-[0.98] group" id="goOfflineBtn" type="button">
+<span class="material-symbols-outlined text-action-red text-[24px] group-hover:scale-110 transition-transform">power_settings_new</span>
+<span class="font-label-lg text-label-lg text-action-red tracking-wide">Go Offline</span>
+</button>
+</div>
+<!-- App Version Signature -->
+<div class="flex flex-col items-center justify-center pt-space-xs pb-space-sm">
+<div class="flex items-center gap-1.5 text-blue-gray-muted">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase font-bold text-blue-gray-muted">TAPSAKAY DRIVER v1.0.0</span>
+</div>
+<p class="font-body-sm text-body-sm text-blue-gray-muted/70 mt-0.5">Bukidnon Motorela Cooperative System</p>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const offlineBtn = document.getElementById('goOfflineBtn');
+    if (offlineBtn) {
+      offlineBtn.addEventListener('click', function() {
+        const confirmed = confirm('Are you sure you want to end your shift and go offline?');
+        if (confirmed) {
+          const textSpan = offlineBtn.querySelector('.text-action-red');
+          if (textSpan) {
+            offlineBtn.classList.add('opacity-75');
+            offlineBtn.innerHTML = `
+              <span class="material-symbols-outlined text-amber-status animate-spin text-[24px]">sync</span>
+              <span class="font-label-lg text-label-lg text-amber-status">Disconnecting...</span>
+            `;
+            setTimeout(() => {
+              offlineBtn.innerHTML = `
+                <span class="material-symbols-outlined text-navy-slate text-[24px]">power_settings_new</span>
+                <span class="font-label-lg text-label-lg text-inverse-on-surface">You are Offline</span>
+              `;
+            }, 800);
+          }
+        }
+      });
+    }
+
+    const currentTab = document.querySelector('nav a[data-path="menu-settings"]');
+    if (currentTab) {
+      currentTab.classList.remove('text-navy-slate');
+      currentTab.classList.add('text-action-red', 'font-bold');
+      const icon = currentTab.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.style.fontVariationSettings = "'FILL' 1";
+      }
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(4,55,123,0.08)]" data-active-classes="text-action-red font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="home-status" href="#"><span class="material-symbols-outlined text-[22px]">speed</span><span class="font-label-sm text-label-sm">Home</span></a><a class="relative min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="new-passenger-request" href="#"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-2 w-4 h-4 rounded-full bg-action-red text-on-primary text-[10px] font-bold flex items-center justify-center">1</span><span class="font-label-sm text-label-sm">Requests</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="pickup-passengers" href="#"><span class="material-symbols-outlined text-[22px]">group</span><span class="font-label-sm text-label-sm">Passengers</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="during-trip" href="#"><span class="material-symbols-outlined text-[22px]">near_me</span><span class="font-label-sm text-label-sm">Route</span></a><a class="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-navy-slate hover:text-navy-deep transition-colors" data-path="menu-settings" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm">Menu</span></a></div></nav></body></html>
