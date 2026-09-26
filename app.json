@@ -11,6 +11,7 @@
       "icon": "./assets/favicon/web-app-manifest-512x512.png"
     },
     "android": {
+      "package": "com.meruuuuooo.tapsakay",
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/favicon/web-app-manifest-512x512.png"
