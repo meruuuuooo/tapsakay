@@ -32,10 +32,14 @@ pnpm test
 
 The **Android release** GitHub Actions workflow builds a signed, installable APK with Expo EAS and attaches it to a GitHub Release. It runs manually from the `main` branch and creates the Git tag only after the build and APK download succeed.
 
+For phone installation, the passenger crash fix, and optional live Google Maps setup, follow the [step-by-step Android guide](docs/android-map-setup.md).
+
 One-time setup:
 
 1. Push this repository to GitHub. If it has no remote yet, add the intended GitHub repository as `origin` first.
 2. Log in to the Expo account that owns the linked EAS project and run `npx eas-cli build --platform android --profile release` locally once. Complete any Android signing prompts; EAS keeps the keystore for later builds.
 3. Create an Expo access token and add it to the GitHub repository's Actions secrets as `EXPO_TOKEN`.
+
+To show the native map in the Android APK, enable **Maps SDK for Android** in Google Cloud. Create an Android-restricted API key for package `com.meruuuuooo.tapsakay` and the SHA-1 fingerprint of the EAS Android signing certificate, then add it to the EAS project's **preview** environment as a sensitive variable named `GOOGLE_MAPS_API_KEY`. Rebuild the APK after adding the key. Without it, the Android app displays a station route preview and the passenger flow remains usable.
 
 For each release, update `expo.version` in `app.json` (starting at `1.0.0`), commit and push it to `main`, then run **Actions → Android release → Run workflow** with the matching tag (for example, `v1.0.0`). Download `TAPSAKAY-v1.0.0.apk` from the resulting GitHub Release and install it on Android. EAS increments Android's internal version code for each release build. If a build fails, the workflow creates no tag or release.
