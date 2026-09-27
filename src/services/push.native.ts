@@ -7,6 +7,7 @@ import type { PushStatus } from './push';
 
 let destination: string | null = null;
 let notifications: typeof ExpoNotifications | null = null;
+let activateListener: (() => void) | null = null;
 
 function getNotifications(): typeof ExpoNotifications | null {
   if (isRunningInExpoGo()) return null;
@@ -32,6 +33,7 @@ export async function registerPush(prompt: boolean): Promise<PushStatus> {
     if (!projectId) return 'error';
     destination = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
     await request('/push/subscriptions', { platform: 'expo', token: destination });
+    activateListener?.();
     return 'registered';
   } catch { return 'error'; }
 }
@@ -41,10 +43,17 @@ export async function getPushDestination(): Promise<string | null> {
 }
 
 export function listenForPush(onOpen: () => void, onReceive: () => void): () => void {
-  const Notifications = getNotifications();
-  if (!Notifications) return () => {};
-  const received = Notifications.addNotificationReceivedListener(onReceive);
-  const opened = Notifications.addNotificationResponseReceivedListener(onOpen);
-  void Notifications.getLastNotificationResponseAsync().then((response) => { if (response) onOpen(); }).catch(() => {});
-  return () => { received.remove(); opened.remove(); };
+  if (isRunningInExpoGo()) return () => {};
+  let remove: (() => void) | null = null;
+  const activate = () => {
+    if (remove) return;
+    const Notifications = getNotifications();
+    if (!Notifications) return;
+    const received = Notifications.addNotificationReceivedListener(onReceive);
+    const opened = Notifications.addNotificationResponseReceivedListener(onOpen);
+    void Notifications.getLastNotificationResponseAsync().then((response) => { if (response) onOpen(); }).catch(() => {});
+    remove = () => { received.remove(); opened.remove(); };
+  };
+  activateListener = activate;
+  return () => { if (activateListener === activate) activateListener = null; remove?.(); };
 }
