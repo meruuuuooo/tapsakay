@@ -24,7 +24,7 @@ export async function registerPush(prompt: boolean): Promise<PushStatus> {
   try {
     const Notifications = getNotifications();
     if (!Notifications) return 'unsupported';
-    await Notifications.setNotificationChannelAsync('rides', { name: 'Ride updates', importance: Notifications.AndroidImportance.HIGH });
+    await Notifications.setNotificationChannelAsync('rides', { name: 'Ride updates', importance: Notifications.AndroidImportance.HIGH, sound: 'default' });
     let permission = await Notifications.getPermissionsAsync();
     if (!permission.granted && prompt && permission.canAskAgain) permission = await Notifications.requestPermissionsAsync();
     if (!permission.granted) return permission.canAskAgain ? 'prompt' : 'denied';
