@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AppState, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
+import { isRunningInExpoGo } from 'expo';
 import { useLocalSearchParams } from 'expo-router';
 import { WelcomeScreen } from '@/components/welcome-screen';
 import { AppIcon, type IconName } from '@/components/app-icon';
@@ -60,7 +61,7 @@ function Notices() {
 }
 function Profile() {
   const s = useAppStore();
-  const [pushStatus, setPushStatus] = useState<PushStatus | null>(null);
+  const [pushStatus, setPushStatus] = useState<PushStatus | null>(Platform.OS === 'android' && isRunningInExpoGo() ? 'unsupported' : null);
   useEffect(() => { if (Platform.OS !== 'web' || !s.user?.verified) return; let active = true; void registerPush(false).then((status) => { if (active) setPushStatus(status); }); return () => { active = false; }; }, [s.user?.verified]);
   return <><SectionTitle title="Your account" /><T size={22} weight="bold">{s.user?.name}</T><T color={C.slate}>{s.user?.email}</T><Pill label={s.user?.role.toUpperCase() ?? ''} />
     {s.user?.verified && pushStatus !== 'registered' && pushStatus !== 'unsupported' && <Button label="Enable ride notifications" kind="secondary" onPress={() => { void registerPush(true).then(setPushStatus); }} />}
