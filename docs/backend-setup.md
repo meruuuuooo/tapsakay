@@ -39,7 +39,7 @@ The API also expires offers when handling ride commands and state refreshes. Run
 
 For PWA push, generate VAPID keys from `backend/` with `php -r 'require "vendor/autoload.php"; print_r(Minishlink\WebPush\VAPID::createVapidKeys());'`. Set `WEB_PUSH_PUBLIC_KEY`, `WEB_PUSH_PRIVATE_KEY`, and a contact `WEB_PUSH_SUBJECT` in the backend environment. Serve the PWA over HTTPS; localhost also works during development. Keep the private key on the server.
 
-For Android push, create Firebase Cloud Messaging credentials for `com.meruuuuooo.tapsakay`. Upload the FCM V1 service account key to the Expo project's Android push credentials. Add Firebase's `google-services.json` as a **file** environment variable named `GOOGLE_SERVICES_FILE` in the EAS `preview` environment, then rebuild the release APK. Test on an installed build.
+For Android push, register a Firebase Android app with the exact package `com.meruuuuooo.tapsakay`. Confirm its downloaded `google-services.json` has that value under `client[].client_info.android_client_info.package_name`. Upload the FCM V1 service account key to the Expo project's Android push credentials. Set the downloaded JSON as a **file** environment variable named `GOOGLE_SERVICES_FILE` in the EAS `preview` environment, then rebuild the release APK. Test on an installed build.
 
 ## 3. Start Expo
 
