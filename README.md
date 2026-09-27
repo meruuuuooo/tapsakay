@@ -1,41 +1,39 @@
-# TAPSAKAY Mock Prototype
+# TAPSAKAY
 
-**Tap. Match. Sakay.** A frontend-only Expo demo of one passenger ride and its driver view. All data and notifications stay in memory; there is no server, authentication, GPS, or cross-device sync.
+**Tap. Match. Sakay.** An Expo passenger and driver app backed by Laravel 13, MySQL 8, and Sanctum authentication.
 
-## Run
+Passengers register and verify email, book seats, and follow driver-reported station updates. Operators provision drivers and vehicles. Drivers manage multiple groups, confirm pickups and drop-offs, and advance through the route. All ride changes and seat reservations are enforced by the server.
+
+## Run locally
+
+Follow [backend and app setup](docs/backend-setup.md) to configure MySQL, start Laravel and Expo, create a driver, and verify email using the local mail log.
 
 ```bash
 pnpm install
+cp .env.example .env
 pnpm start
 ```
 
-Open the Expo app on a device, simulator, or press `w` for web. The welcome screen appears on each launch; choose Passenger or Driver to enter the demo. Both modes remain available through the switch in the header. Reloading starts a fresh demo.
-
-## Demo walkthrough
-
-1. In Passenger → Book, select **CBM → Market** and **2 passengers**, then request a ride.
-2. After the short matching delay, **Rela #01** appears. Switch to Driver → Requests and accept.
-3. At CBM, confirm pickup. Driver occupancy changes from **5/8 to 7/8**.
-4. Advance the driver through CMU Gate, Hospital, and Market. Confirm drop-off at Market. Occupancy returns to **5/8**.
-5. Switch to Passenger → Trips to see completion. Driver → Menu has **Reset demo** and guarded force-step controls.
-
-The route has five stations and three mock relas. Matching uses the first online rela that has enough free seats and has not passed the pickup. Only one ride can be active at a time.
+The frontend needs the configured API to sign in and operate. Set `EXPO_PUBLIC_API_URL` to the backend URL; physical phones need your computer’s LAN address. See the [API contract](docs/api.md).
 
 ## Checks
 
 ```bash
 pnpm typecheck
 pnpm test
+pnpm build:web
+cd backend
+php artisan test
+vendor/bin/pint --test
 ```
 
-## Installable web app (Android and iPhone)
+Backend tests use a separate MySQL `tapsakay_test` database and include concurrent booking checks. The older demo tests remain as isolated prototype fixtures; the running app uses `src/store/app.ts` and server state.
 
-Build the PWA with `pnpm build:web`. This exports the web app, manifest, icons, and offline service worker to `dist/`. Host the **contents** of `dist/` at the root of an HTTPS website (for example, with EAS Hosting or another static host). A local `localhost` server also works for desktop testing. The service worker is generated for production exports only, so use `pnpm build:web` rather than `expo export` for deployments.
+## Installable web app
 
-- **Android:** Open the HTTPS URL in Chrome and choose **Install app** or **Add to Home screen** from the browser menu.
-- **iPhone:** Open the HTTPS URL in Safari, tap **Share**, then **Add to Home Screen**.
+`pnpm build:web` creates `dist/` with the PWA manifest, icons, and static service worker. Serve the app and Laravel API on the same HTTPS origin in production; routing details are in the setup guide. Android Chrome supports **Install app**; iPhone Safari supports **Share → Add to Home Screen**.
 
-No Apple Developer account or app store is needed for the PWA. The demo UI can reopen offline after the first online visit; the map's OpenStreetMap tiles still need internet. Ride data stays in memory and resets when the app reloads, including when it is reopened from the home screen. This build expects the site at the domain root because its asset, manifest, and service worker URLs start with `/`.
+The static shell can reopen offline. Sign-in, bookings, driver actions, and current ride data require a connection. API responses and private user data are not stored in the service-worker cache. Driver tracking shows confirmed stations, not GPS positions.
 
 ## Android APK releases
 

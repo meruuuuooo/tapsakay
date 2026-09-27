@@ -65,7 +65,7 @@ export function WelcomeScreen({ onPassenger, onDriver }: { onPassenger: () => vo
       <View style={styles.bottom}>
         <T size={compact ? 24 : 29} weight="extra" color={C.navy} style={styles.heading}>Your route starts here.</T>
         <T size={compact ? 13 : 15} color={C.slate} style={styles.description}>Choose a stop, match with a rela, and follow the ride.</T>
-        <View style={[styles.actions, compact && styles.compactActions]}><Button label="Continue as passenger" onPress={onPassenger} icon="arrow-forward" /><Pressable accessibilityRole="button" onPress={onDriver} style={styles.driverButton}><T size={14} weight="bold" color={C.navy}>Open driver demo</T><AppIcon name="arrow-forward" size={17} color={C.navy} /></Pressable></View>
+        <View style={[styles.actions, compact && styles.compactActions]}><Button label="Continue as passenger" onPress={onPassenger} icon="arrow-forward" /><Pressable accessibilityRole="button" onPress={onDriver} style={styles.driverButton}><T size={14} weight="bold" color={C.navy}>Sign in as driver</T><AppIcon name="arrow-forward" size={17} color={C.navy} /></Pressable></View>
       </View>
     </ScrollView>
   </SafeAreaView>;

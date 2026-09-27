@@ -38,6 +38,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const pathname = new URL(event.request.url).pathname;
+  if (['/api', '/sanctum', '/email'].some((prefix) => pathname === prefix || pathname.startsWith(prefix + '/'))) return;
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
 
   if (event.request.mode === 'navigate') {

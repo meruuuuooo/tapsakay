@@ -41,3 +41,8 @@ example
 # generated native folders
 /ios
 /android
+
+# Private API and frontend configuration
+.env
+.env.*
+!.env.example

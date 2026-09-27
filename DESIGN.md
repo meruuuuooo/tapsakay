@@ -213,3 +213,15 @@ The design system adopts a **Rounded** shape language (`roundedness: 2` with sta
   - Active / Current stop: Pulsing target node with primary red `#e3202a` center and outer soft red ring.
   - Upcoming stops: Dashed connector line with hollow slate-gray (`#8d9eb5`) circles.
 - **Status Pills:** Pill badge (`#f4ae0b` background with dark navy text `#04377b`) displaying trip state: "Matching", "Arriving", or "On the Way".
+
+## Connected account and ride surfaces
+
+Account screens reuse the existing Jakarta typography, navy headings, red primary actions, and 52px controls. Labeled email/password inputs support registration, login, verification, and password recovery. Forms scroll and adjust for the keyboard. Submission errors are announced as alerts; confirmations use polite live regions.
+
+The authenticated shell derives its passenger or driver navigation from the account. Driver request and passenger tabs show one card per group, with station names, seat count, status, and actions appropriate to the server state. Availability separates onboard seats from reservations. Offline state presents a refresh action and disables ride mutations. The responsive shell retains the centered 520px maximum width.
+
+Runtime font names `Jakarta`, `JakartaMedium`, `JakartaSemi`, `JakartaBold`, and `JakartaExtra` are the Expo aliases for Plus Jakarta Sans. The existing outer viewport color is `#e8edf7`; it frames the centered app on wider screens.
+
+## Passenger home
+
+The passenger home opens with a greeting, a compact avatar, and one dominant booking panel. The primary action is the red `Book a ride` button; route context follows as a five-stop strip, then a driver-reported map and nearby rela availability cards. Active rides replace the booking panel at the same position so current travel always has priority. Keep the home as a task surface: short copy, strong navy headings, red only for action, and status colors reserved for availability and progress.
