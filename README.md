@@ -28,6 +28,15 @@ pnpm typecheck
 pnpm test
 ```
 
+## Installable web app (Android and iPhone)
+
+Build the PWA with `pnpm build:web`. This exports the web app, manifest, icons, and offline service worker to `dist/`. Host the **contents** of `dist/` at the root of an HTTPS website (for example, with EAS Hosting or another static host). A local `localhost` server also works for desktop testing. The service worker is generated for production exports only, so use `pnpm build:web` rather than `expo export` for deployments.
+
+- **Android:** Open the HTTPS URL in Chrome and choose **Install app** or **Add to Home screen** from the browser menu.
+- **iPhone:** Open the HTTPS URL in Safari, tap **Share**, then **Add to Home Screen**.
+
+No Apple Developer account or app store is needed for the PWA. The demo UI can reopen offline after the first online visit; the map's OpenStreetMap tiles still need internet. Ride data stays in memory and resets when the app reloads, including when it is reopened from the home screen. This build expects the site at the domain root because its asset, manifest, and service worker URLs start with `/`.
+
 ## Android APK releases
 
 The **Android release** GitHub Actions workflow builds a signed, installable APK with Expo EAS and attaches it to a GitHub Release. It runs manually from the `main` branch and creates the Git tag only after the build and APK download succeed.
