@@ -14,7 +14,7 @@ cp .env.example .env
 pnpm start
 ```
 
-The frontend needs the configured API to sign in and operate. Set `EXPO_PUBLIC_API_URL` to the backend URL; physical phones need your computer’s LAN address. See the [API contract](docs/api.md).
+The frontend needs the configured API to sign in and operate. For `npx expo start --clear --tunnel`, set `EXPO_PUBLIC_API_URL=https://apitapsakay.lumichat.site` in `.env`; the current local `.env` is already set this way. Native development uses this API as its fallback when the variable is absent. To use a backend running on your computer from a phone, set the variable to your computer’s LAN address. See the [API contract](docs/api.md).
 
 ## Checks
 

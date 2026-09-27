@@ -144,8 +144,8 @@ export default function App() {
     const poll = setInterval(() => { if (foreground()) void useAppStore.getState().refresh(); }, 5000);
     const heartbeat = setInterval(() => { if (foreground()) void useAppStore.getState().heartbeat(); }, 30000);
     const subscription = AppState.addEventListener('change', resume);
-    if (typeof window !== 'undefined') { window.addEventListener('online', resume); window.addEventListener('offline', resume); document.addEventListener('visibilitychange', resume); }
-    return () => { clearInterval(poll); clearInterval(heartbeat); subscription.remove(); if (typeof window !== 'undefined') { window.removeEventListener('online', resume); window.removeEventListener('offline', resume); document.removeEventListener('visibilitychange', resume); } };
+    if (Platform.OS === 'web') { window.addEventListener('online', resume); window.addEventListener('offline', resume); document.addEventListener('visibilitychange', resume); }
+    return () => { clearInterval(poll); clearInterval(heartbeat); subscription.remove(); if (Platform.OS === 'web') { window.removeEventListener('online', resume); window.removeEventListener('offline', resume); document.removeEventListener('visibilitychange', resume); } };
   }, [s.user?.id, s.user?.verified]);
   const tabs = s.user?.role === 'driver' ? driverTabs : passengerTabs;
   if (s.ready && !s.user && showWelcome && !resetToken) {

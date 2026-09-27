@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 const webOrigin = Platform.OS === 'web' && typeof window !== 'undefined' ? window.location.origin : null;
 const defaultApiUrl = webOrigin === 'https://tapsakay.lumichat.site'
   ? 'https://apitapsakay.lumichat.site'
-  : webOrigin ?? 'http://localhost:8000';
+  : webOrigin ?? 'https://apitapsakay.lumichat.site';
 export const API_URL = (process.env.EXPO_PUBLIC_API_URL || defaultApiUrl).replace(/\/$/, '');
 const TOKEN_KEY = 'tapsakay.access-token';
 let token: string | null = null;
