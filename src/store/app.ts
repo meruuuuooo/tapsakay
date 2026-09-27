@@ -5,7 +5,7 @@ import { ApiError, csrf, request, restoreToken, saveToken } from '@/services/api
 import type { ApiRide, Notice, Page, Snapshot, Station, User } from '@/types/api';
 
 type Store = Snapshot & {
-  user: User | null; ready: boolean; busy: boolean; stale: boolean; error: string | null; message: string | null;
+  user: User | null; ready: boolean; dataReady: boolean; busy: boolean; stale: boolean; error: string | null; message: string | null;
   stations: Station[]; notices: Notice[]; history: ApiRide[]; historyPage: number; historyLastPage: number; noticePage: number; noticeLastPage: number;
   pickupId: number; dropoffId: number; passengerCount: number;
   init: () => Promise<void>; login: (email: string, password: string) => Promise<boolean>;
@@ -22,7 +22,7 @@ let bookingKey: string | null = null;
 const errorMessage = (e: unknown) => e instanceof ApiError ? Object.values(e.errors ?? {}).flat()[0] ?? e.message : 'Something went wrong. Please retry.';
 
 export const useAppStore = create<Store>((set, get) => ({
-  ...clean(), user: null, ready: false, busy: false, stale: true, error: null, message: null,
+  ...clean(), user: null, ready: false, dataReady: false, busy: false, stale: true, error: null, message: null,
   pickupId: 1, dropoffId: 4, passengerCount: 1,
   init: async () => {
     try { await restoreToken(); await get().checkUser(); }
@@ -38,14 +38,14 @@ export const useAppStore = create<Store>((set, get) => ({
       if (user.verified) await get().refresh();
     } catch (e) {
       if (version !== epoch) return;
-      if (e instanceof ApiError && e.status === 401) { await saveToken(null); set({ user: null, ...clean() }); }
+      if (e instanceof ApiError && e.status === 401) { await saveToken(null); set({ user: null, dataReady: false, ...clean() }); }
       else set({ error: errorMessage(e), stale: true });
     }
   },
   login: async (email, password) => {
     if (get().busy) return false;
     const version = ++epoch;
-    set({ busy: true, error: null, message: null, ...clean() });
+    set({ busy: true, dataReady: false, error: null, message: null, ...clean() });
     try {
       await csrf();
       const result = await request<{ user: User; token?: string }>(Platform.OS === 'web' ? '/auth/login' : '/auth/token', { email: email.trim().toLowerCase(), password, deviceName: 'TAPSAKAY mobile' });
@@ -77,7 +77,7 @@ export const useAppStore = create<Store>((set, get) => ({
     }
     ++epoch; bookingKey = null;
     await saveToken(null);
-    set({ ...clean(), user: null, stale: true, busy: false, error: null, message: null, pickupId: 1, dropoffId: 4, passengerCount: 1 });
+    set({ ...clean(), user: null, dataReady: false, stale: true, busy: false, error: null, message: null, pickupId: 1, dropoffId: 4, passengerCount: 1 });
   },
   refresh: async () => {
     if (refreshRunning || !get().user?.verified) return;
@@ -91,9 +91,9 @@ export const useAppStore = create<Store>((set, get) => ({
       set({ ...snapshot, stations: stations.data, notices: [...new Map([...get().notices, ...notices.data].map((n) => [n.id, n])).values()].sort((a, b) => b.id - a.id), history: [...new Map([...get().history, ...history.data].map((r) => [r.id, r])).values()].sort((a, b) => b.id - a.id), historyLastPage: history.last_page, noticeLastPage: notices.last_page, stale: false, ...(get().stale ? { error: null } : {}) });
     } catch (e) {
       if (version !== epoch) return;
-      if (e instanceof ApiError && e.status === 401) { ++epoch; await saveToken(null); set({ user: null, ...clean(), error: 'Your session expired. Please sign in again.', stale: true }); }
+      if (e instanceof ApiError && e.status === 401) { ++epoch; await saveToken(null); set({ user: null, dataReady: false, ...clean(), error: 'Your session expired. Please sign in again.', stale: true }); }
       else set({ stale: true, error: errorMessage(e) });
-    } finally { refreshRunning = false; }
+    } finally { refreshRunning = false; if (version === epoch) set({ dataReady: true }); }
   },
   heartbeat: async () => {
     if (get().user?.role !== 'driver' || !get().user?.verified || !get().relas.length) return;

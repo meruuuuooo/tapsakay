@@ -8,6 +8,7 @@ import { AppIcon, type IconName } from '@/components/app-icon';
 import { AccountScreen } from '@/components/account-screen';
 import { Button, C, Card, Pill, SectionTitle, T } from '@/components/demo-ui';
 import { RouteMap } from '@/components/route-map';
+import { ScreenSkeleton, StartupSkeleton } from '@/components/skeleton';
 import { useAppStore } from '@/store/app';
 import type { ApiRide } from '@/types/api';
 
@@ -128,7 +129,7 @@ export default function App() {
     /></View></View>;
   }
   return <View style={styles.outer}><SafeAreaView style={styles.app} edges={['top', 'bottom']}>
-    {!s.ready ? <View style={styles.content}><T color={C.navy}>Opening TAPSAKAY…</T></View> : !s.user ? <AccountScreen onBack={() => setShowWelcome(true)} /> : <>
+    {!s.ready ? <StartupSkeleton /> : !s.user ? <AccountScreen onBack={() => setShowWelcome(true)} /> : <>
       <View style={styles.header}><Image source={require('../../assets/favicon/web-app-manifest-512x512.png')} style={{ width: 48, height: 48 }} accessibilityLabel="TAPSAKAY logo" /><View style={{ flex: 1 }}><T size={18} weight="extra" color={C.navy}>TAPSAKAY</T><T size={11} color={C.slate}>Tap. Match. Sakay.</T></View><View style={styles.headerActions}>{s.user.role !== 'driver' && <Pill label={s.user.role.toUpperCase()} />}{s.user.role === 'driver' && s.user.verified && <Pressable
         accessibilityRole="button"
         accessibilityLabel="Open driver notifications"
@@ -145,7 +146,7 @@ export default function App() {
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         {s.error && <View accessibilityRole="alert"><Card style={{ backgroundColor: C.redPale }}><T color={C.red}>{s.error}</T></Card></View>}
         {s.user.verified && s.stale && <Card style={{ backgroundColor: C.amberPale }}><T color={C.ink}>Updates unavailable. Reconnect before changing a ride.</T><Button label="Refresh connection" kind="secondary" onPress={() => void s.refresh()} /></Card>}
-        {!s.user.verified ? <><SectionTitle title="Verify your email" /><T color={C.slate}>Open the verification link sent to {s.user.email}, then check again here.</T>{s.message && <View accessibilityLiveRegion="polite" role="status"><T color={C.ink}>{s.message}</T></View>}<Button label="Check verification" onPress={() => void s.checkUser()} /><Button label="Resend verification email" kind="secondary" disabled={s.busy} onPress={() => void s.authAction('verification-notification', {})} /><Profile /></> : s.user.role === 'driver' ? <Driver tab={tab} navigate={setTab} /> : <Passenger tab={tab} navigate={setTab} />}
+        {!s.user.verified ? <><SectionTitle title="Verify your email" /><T color={C.slate}>Open the verification link sent to {s.user.email}, then check again here.</T>{s.message && <View accessibilityLiveRegion="polite" role="status"><T color={C.ink}>{s.message}</T></View>}<Button label="Check verification" onPress={() => void s.checkUser()} /><Button label="Resend verification email" kind="secondary" disabled={s.busy} onPress={() => void s.authAction('verification-notification', {})} /><Profile /></> : !s.dataReady ? <ScreenSkeleton tab={tab} role={s.user.role} /> : s.user.role === 'driver' ? <Driver tab={tab} navigate={setTab} /> : <Passenger tab={tab} navigate={setTab} />}
       </ScrollView>
       {s.user.verified && <View style={styles.nav}>{tabs.map((name) => <Pressable key={name} accessibilityRole="tab" accessibilityState={{ selected: tab === name }} onPress={() => setTab(name)} style={styles.navItem}><AppIcon name={icons[name]} size={21} color={tab === name ? C.red : C.slate} /><T size={name === 'Notifications' ? 9 : 10} weight="bold" color={tab === name ? C.red : C.slate}>{name}</T></Pressable>)}</View>}
     </>}

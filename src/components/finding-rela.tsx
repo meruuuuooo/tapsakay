@@ -3,6 +3,7 @@ import { AccessibilityInfo, Animated, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { AppIcon } from '@/components/app-icon';
 import { Button, C, T } from '@/components/demo-ui';
+import { Skeleton } from '@/components/skeleton';
 import { stationName } from '@/data/mock';
 import type { Ride } from '@/types/demo';
 
@@ -56,6 +57,11 @@ export function FindingRela({ ride, onCancel }: { ride: Ride; onCancel: () => vo
       <View style={styles.pickupCopy}><T size={10} weight="bold" color={C.muted}>PICKUP POINT</T><T size={15} weight="bold">{stationName(ride.pickupId)}</T><T size={12} color={C.slate}>To {stationName(ride.dropoffId)}</T></View>
       <View style={styles.seatCopy}><T size={11} color={C.slate}>Demo route</T><T size={13} weight="bold" color={C.red}>{ride.passengerCount} {ride.passengerCount === 1 ? 'seat' : 'seats'}</T></View>
     </View>
+    <View style={styles.pendingCard} accessibilityLabel="Loading rela match details">
+      <Skeleton width={42} height={42} radius={12} />
+      <View style={styles.pendingCopy}><Skeleton width="72%" height={14} /><Skeleton width="92%" height={11} /></View>
+      <Skeleton width={54} height={26} radius={99} />
+    </View>
     <View style={styles.infoCard}><View style={styles.infoIcon}><T size={13} weight="bold" color={C.white}>i</T></View><View style={styles.infoCopy}><T size={13} weight="bold" color={C.navy}>This may take a few moments</T><T size={12} color={C.slate}>Checking online relas that can reach {stationName(ride.pickupId)}.</T></View></View>
     <View style={styles.bottom}><Button label="Cancel request" kind="secondary" onPress={onCancel} /><T size={11} color={C.muted} style={styles.center}>Your request is still searching until you cancel it.</T></View>
   </View>;
@@ -76,6 +82,8 @@ const styles = StyleSheet.create({
   pickupCard: { minHeight: 78, padding: 13, borderRadius: 13, backgroundColor: C.white, flexDirection: 'row', alignItems: 'center', gap: 10, shadowColor: C.navy, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 8, elevation: 1 },
   pickupIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: C.pale, alignItems: 'center', justifyContent: 'center' },
   pickupCopy: { flex: 1, gap: 1 }, seatCopy: { alignItems: 'flex-end', gap: 2 },
+  pendingCard: { minHeight: 68, padding: 13, borderRadius: 13, backgroundColor: C.white, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  pendingCopy: { flex: 1, gap: 7 },
   infoCard: { backgroundColor: '#edf3ff', borderRadius: 12, padding: 13, flexDirection: 'row', gap: 10 },
   infoIcon: { width: 23, height: 23, borderRadius: 12, backgroundColor: '#385da2', alignItems: 'center', justifyContent: 'center' }, infoCopy: { flex: 1, gap: 3 },
   bottom: { marginTop: 'auto', gap: 8, paddingTop: 16 },
