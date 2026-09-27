@@ -35,7 +35,11 @@ cd backend
 php artisan schedule:work
 ```
 
-The API also expires offers when handling ride commands and state refreshes. No queue worker or Redis is required for this version. Mail is sent synchronously; local `.env` uses the log mailer.
+The API also expires offers when handling ride commands and state refreshes. Run `php artisan queue:work --tries=3` in another terminal for push delivery. The database queue is configured in `.env.example`; no Redis is required. Mail is sent synchronously; local `.env` uses the log mailer.
+
+For PWA push, generate VAPID keys from `backend/` with `php -r 'require "vendor/autoload.php"; print_r(Minishlink\WebPush\VAPID::createVapidKeys());'`. Set `WEB_PUSH_PUBLIC_KEY`, `WEB_PUSH_PRIVATE_KEY`, and a contact `WEB_PUSH_SUBJECT` in the backend environment. Serve the PWA over HTTPS; localhost also works during development. Keep the private key on the server.
+
+For Android push, create Firebase Cloud Messaging credentials for `com.meruuuuooo.tapsakay`. Upload the FCM V1 service account key to the Expo project's Android push credentials. Add Firebase's `google-services.json` as a **file** environment variable named `GOOGLE_SERVICES_FILE` in the EAS `preview` environment, then rebuild the release APK. Test on an installed build.
 
 ## 3. Start Expo
 
@@ -87,15 +91,15 @@ Backend tests run migrations against **tapsakay_test**, never the development da
 ## Production checklist
 
 - Serve the PWA and API through HTTPS on the same origin. Route `/api/*`, `/sanctum/*`, `/email/*`, and `/up` to Laravel's `public/index.php`; serve Expo's `dist/` for the frontend. Keep all other backend files outside the web root.
-- Set `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` and `FRONTEND_URL` to the public HTTPS origin, `SESSION_SECURE_COOKIE=true`, and exact `SANCTUM_STATEFUL_DOMAINS` / `CORS_ALLOWED_ORIGINS`. The Sanctum setting uses hostnames, optionally with ports, without a scheme; CORS uses full origins.
+- Set `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL` and `FRONTEND_URL` to the public HTTPS origin, `SESSION_SECURE_COOKIE=true`, `QUEUE_CONNECTION=database`, the Web Push keys, and exact `SANCTUM_STATEFUL_DOMAINS` / `CORS_ALLOWED_ORIGINS`. The Sanctum setting uses hostnames, optionally with ports, without a scheme; CORS uses full origins.
 - Configure `TRUSTED_PROXIES` only for your proxy IPs. Configure SMTP settings and a real sender. Keep APP_KEY and database credentials secret; do not change APP_KEY during routine deploys.
 - Use a dedicated runtime database account restricted to the production schema; apply migrations using a separate migration account. Back up MySQL and test restore procedures.
-- Run `composer install --no-dev --optimize-autoloader`, `php artisan migrate --force`, and `php artisan config:cache`. Run `php artisan schedule:run` every minute through cron.
+- Run `composer install --no-dev --optimize-autoloader`, `php artisan migrate --force`, and `php artisan config:cache`. Run `php artisan schedule:run` every minute through cron and keep `php artisan queue:work --tries=3` running under a process supervisor.
 - Monitor `/up`, server errors, failed email delivery, 401/429 rates, stale drivers, and database availability. Logs must not include passwords or bearer tokens.
 - The PWA caches static assets only. Bookings and driver actions require a connection; private data is not persisted in the frontend and API responses use `Cache-Control: no-store`.
 
-There is no live GPS, push messaging, payment processing, walk-in occupancy, reverse-route travel, or administrator dashboard. The single-route lock favors correctness for this small fleet; measure lock contention before scaling the service.
+There is no live GPS, payment processing, walk-in occupancy, reverse-route travel, or administrator dashboard. The single-route lock favors correctness for this small fleet; measure lock contention before scaling the service.
 
 ## Verification performed
 
-The implementation was checked with MySQL 8.0: 16 backend tests (112 assertions), including simultaneous bookings in separate processes; 14 frontend tests; TypeScript; Laravel Pint; and the production web build. Browser checks exercised registration, emailed verification, session-cookie login/logout, and two passengers sharing a ride with one driver in independent sessions. Completed histories survived reload. Native credential storage is implemented, but a physical Android/iOS device build was not exercised in this workspace.
+Before push was added, the app was checked with MySQL 8.0: 16 backend tests (112 assertions), including simultaneous bookings in separate processes; 14 frontend tests; TypeScript; Laravel Pint; and the production web build. Browser checks exercised registration, emailed verification, session-cookie login/logout, and two passengers sharing a ride with one driver in independent sessions. Completed histories survived reload. Push delivery still needs a configured Android build and HTTPS PWA for device testing.

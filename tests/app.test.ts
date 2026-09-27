@@ -4,8 +4,10 @@ const mocks = vi.hoisted(() => ({ request: vi.fn(), saveToken: vi.fn(), restoreT
 vi.mock('react-native', () => ({ Platform: { OS: 'web' } }));
 vi.mock('expo-crypto', () => ({ randomUUID: () => '11111111-1111-4111-8111-111111111111' }));
 vi.mock('../src/services/api', () => ({ ...mocks, ApiError: class ApiError extends Error { constructor(public status: number, message: string) { super(message); } } }));
+vi.mock('../src/services/push', () => ({ getPushDestination: vi.fn().mockResolvedValue(null) }));
 import { useAppStore } from '../src/store/app';
 import { ApiError } from '../src/services/api';
+import { getPushDestination } from '../src/services/push';
 
 const user = { id: 1, name: 'Rider', email: 'rider@example.test', role: 'passenger' as const, verified: true };
 const snapshot = { ride: null, rides: [], relas: [], serverTime: '2026-09-27T00:00:00Z' };
@@ -19,6 +21,7 @@ function healthy() {
 }
 beforeEach(async () => {
   vi.resetAllMocks(); healthy();
+  vi.mocked(getPushDestination).mockResolvedValue(null);
   useAppStore.setState({ busy: false }); await useAppStore.getState().logout();
   useAppStore.setState({ user, stale: false, busy: false, error: null, message: null });
   mocks.request.mockClear();

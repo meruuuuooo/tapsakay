@@ -49,6 +49,36 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
 });
+
+self.addEventListener('push', (event) => {
+  event.waitUntil((async () => {
+    let payload = {};
+    try { payload = event.data ? event.data.json() : {}; } catch (_) {}
+    await self.registration.showNotification(payload.title || 'TAPSAKAY', {
+      body: payload.body || 'Your ride has an update.',
+      icon: '/icon-192.png',
+      data: { url: '/?notification=1' },
+      tag: payload.data && payload.data.noticeId ? 'ride-notice-' + payload.data.noticeId : undefined,
+    });
+    const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    clients.forEach((client) => client.postMessage({ type: 'ride-push' }));
+  })());
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil((async () => {
+    const target = new URL('/?notification=1', self.location.origin).href;
+    const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    const existing = clients.find((client) => new URL(client.url).origin === self.location.origin);
+    if (existing) {
+      await existing.navigate(target);
+      await existing.focus();
+    } else {
+      await self.clients.openWindow(target);
+    }
+  })());
+});
 `);
 
 console.log(`PWA service worker ready: ${urls.length} local files cached.`);

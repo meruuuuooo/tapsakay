@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AppState, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -10,6 +10,7 @@ import { Button, C, Card, Pill, SectionTitle, T } from '@/components/demo-ui';
 import { RouteMap } from '@/components/route-map';
 import { ScreenSkeleton, StartupSkeleton } from '@/components/skeleton';
 import { useAppStore } from '@/store/app';
+import { listenForPush, registerPush, type PushStatus } from '@/services/push';
 import type { ApiRide } from '@/types/api';
 
 const passengerTabs = ['Home', 'Book', 'Trips', 'Notifications', 'Profile'] as const;
@@ -59,7 +60,13 @@ function Notices() {
 }
 function Profile() {
   const s = useAppStore();
-  return <><SectionTitle title="Your account" /><T size={22} weight="bold">{s.user?.name}</T><T color={C.slate}>{s.user?.email}</T><Pill label={s.user?.role.toUpperCase() ?? ''} /><Button label="Sign out" kind="secondary" disabled={s.busy} onPress={() => void s.logout()} /></>;
+  const [pushStatus, setPushStatus] = useState<PushStatus | null>(null);
+  useEffect(() => { if (!s.user?.verified) return; let active = true; void registerPush(false).then((status) => { if (active) setPushStatus(status); }); return () => { active = false; }; }, [s.user?.verified]);
+  return <><SectionTitle title="Your account" /><T size={22} weight="bold">{s.user?.name}</T><T color={C.slate}>{s.user?.email}</T><Pill label={s.user?.role.toUpperCase() ?? ''} />
+    {s.user?.verified && pushStatus !== 'registered' && pushStatus !== 'unsupported' && <Button label="Enable ride notifications" kind="secondary" onPress={() => { void registerPush(true).then(setPushStatus); }} />}
+    {s.user?.verified && pushStatus === 'denied' && <T color={C.slate}>Allow notifications in your device or browser settings, then try again.</T>}
+    {s.user?.verified && pushStatus === 'error' && <T color={C.slate}>Notifications could not be enabled. Check your connection and try again.</T>}
+    <Button label="Sign out" kind="secondary" disabled={s.busy} onPress={() => void s.logout()} /></>;
 }
 function Passenger({ tab, navigate }: { tab: Tab; navigate: (tab: Tab) => void }) {
   const s = useAppStore();
@@ -107,13 +114,30 @@ export default function App() {
   const s = useAppStore();
   const [tab, setTab] = useState<Tab>('Home');
   const [showWelcome, setShowWelcome] = useState(true);
-  const { resetToken } = useLocalSearchParams<{ resetToken?: string }>();
+  const [showPushPrompt, setShowPushPrompt] = useState(false);
+  const [pushStatus, setPushStatus] = useState<PushStatus | null>(null);
+  const openedFromPush = useRef(false);
+  const { resetToken, notification } = useLocalSearchParams<{ resetToken?: string; notification?: string }>();
   useEffect(() => { void useAppStore.getState().init(); }, []);
-  useEffect(() => { setTab('Home'); if (!s.user?.id) setShowWelcome(true); }, [s.user?.id]);
+  useEffect(() => { setTab(openedFromPush.current || notification ? 'Notifications' : 'Home'); if (!s.user?.id) setShowWelcome(true); }, [s.user?.id, notification]);
+  useEffect(() => {
+    if (!s.user?.verified) { setShowPushPrompt(false); return; }
+    let cancelled = false;
+    void registerPush(Platform.OS === 'android').then((status) => {
+      if (cancelled) return;
+      setPushStatus(status);
+      if (Platform.OS === 'web' && status === 'prompt' && localStorage.getItem(`push-dismissed-${s.user?.id}`) !== '1') setShowPushPrompt(true);
+    });
+    return () => { cancelled = true; };
+  }, [s.user?.id, s.user?.verified]);
+  useEffect(() => {
+    if (!s.user?.verified) return;
+    return listenForPush(() => { openedFromPush.current = true; setTab('Notifications'); void useAppStore.getState().refresh(); }, () => { void useAppStore.getState().refresh(); });
+  }, [s.user?.id, s.user?.verified]);
   useEffect(() => {
     if (!s.user?.verified) return;
     const foreground = () => AppState.currentState === 'active' && (Platform.OS !== 'web' || typeof document === 'undefined' || document.visibilityState !== 'hidden');
-    const resume = () => { if (typeof navigator !== 'undefined' && navigator.onLine === false) { useAppStore.setState({ stale: true }); return; } if (foreground()) { void useAppStore.getState().heartbeat(); void useAppStore.getState().refresh(); } else useAppStore.setState({ stale: true }); };
+    const resume = () => { if (typeof navigator !== 'undefined' && navigator.onLine === false) { useAppStore.setState({ stale: true }); return; } if (foreground()) { void useAppStore.getState().heartbeat(); void useAppStore.getState().refresh(); void registerPush(false); } else useAppStore.setState({ stale: true }); };
     resume();
     const poll = setInterval(() => { if (foreground()) void useAppStore.getState().refresh(); }, 5000);
     const heartbeat = setInterval(() => { if (foreground()) void useAppStore.getState().heartbeat(); }, 30000);
@@ -144,6 +168,8 @@ export default function App() {
         style={({ pressed }) => [styles.profileButton, { opacity: pressed ? 0.75 : 1 }, tab === 'Profile' && { borderColor: C.navy }]}
       ><View style={styles.profileAvatar}><AppIcon name="person-outline" size={24} color={C.navy} /></View></Pressable>}</View></View>
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        {s.user.verified && showPushPrompt && <Card><T weight="bold">Ride updates on your device</T><T color={C.slate}>Get notified when your ride changes, even when TAPSAKAY is closed.</T><Button label="Enable notifications" onPress={() => { void registerPush(true).then((status) => { setPushStatus(status); setShowPushPrompt(status === 'error' || status === 'prompt'); }); }} /><Button label="Not now" kind="secondary" onPress={() => { localStorage.setItem(`push-dismissed-${s.user?.id}`, '1'); setShowPushPrompt(false); }} /></Card>}
+        {pushStatus === 'error' && s.user.verified && <T color={C.slate}>Push notifications are unavailable. Ride updates still appear here while the app is open.</T>}
         {s.error && <View accessibilityRole="alert"><Card style={{ backgroundColor: C.redPale }}><T color={C.red}>{s.error}</T></Card></View>}
         {s.user.verified && s.stale && <Card style={{ backgroundColor: C.amberPale }}><T color={C.ink}>Updates unavailable. Reconnect before changing a ride.</T><Button label="Refresh connection" kind="secondary" onPress={() => void s.refresh()} /></Card>}
         {!s.user.verified ? <><SectionTitle title="Verify your email" /><T color={C.slate}>Open the verification link sent to {s.user.email}, then check again here.</T>{s.message && <View accessibilityLiveRegion="polite" role="status"><T color={C.ink}>{s.message}</T></View>}<Button label="Check verification" onPress={() => void s.checkUser()} /><Button label="Resend verification email" kind="secondary" disabled={s.busy} onPress={() => void s.authAction('verification-notification', {})} /><Profile /></> : !s.dataReady ? <ScreenSkeleton tab={tab} role={s.user.role} /> : s.user.role === 'driver' ? <Driver tab={tab} navigate={setTab} /> : <Passenger tab={tab} navigate={setTab} />}

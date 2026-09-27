@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { Platform } from 'react-native';
 import * as Crypto from 'expo-crypto';
 import { ApiError, csrf, request, restoreToken, saveToken } from '@/services/api';
+import { getPushDestination } from '@/services/push';
 import type { ApiRide, Notice, Page, Snapshot, Station, User } from '@/types/api';
 
 type Store = Snapshot & {
@@ -71,7 +72,8 @@ export const useAppStore = create<Store>((set, get) => ({
     if (get().busy) return;
     set({ busy: true, error: null });
     try {
-      await request('/auth/logout', {});
+      const pushDestination = await getPushDestination().catch(() => null);
+      await request('/auth/logout', { pushDestination });
     } catch (e) {
       if (!(e instanceof ApiError && e.status === 401)) { set({ error: 'Sign-out could not reach the server. Reconnect and retry.', busy: false }); return; }
     }

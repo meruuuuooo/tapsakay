@@ -10,7 +10,7 @@ Base path: `/api/v1`. Send `Accept: application/json`. POST bodies are JSON. Bro
 | POST `/auth/login` | `email`, `password`; web session login, requires CSRF |
 | POST `/auth/token` | `email`, `password`, optional `deviceName`; native login returns `user`, `token` |
 | GET `/auth/me` | Returns `user: {id, name, email, role, verified}` |
-| POST `/auth/logout` | Revokes current native token or browser session |
+| POST `/auth/logout` | Revokes current native token or browser session; optional `pushDestination` removes this device's push registration |
 | POST `/auth/verification-notification` | Resends verification, authenticated, limited to 3/minute |
 | POST `/auth/forgot-password` | `email`; always returns a generic acknowledgement |
 | POST `/auth/reset-password` | `email`, `token`, `password`, `password_confirmation`; revokes all sessions/tokens |
@@ -38,6 +38,9 @@ All require authentication and verified email.
 | POST `/driver/advance` | `{fromStationId: integer}`; confirms next station, rejects outdated commands or unresolved obligations |
 | POST `/driver/restart` | Starts a new run at the first station; must be at terminal with no active rides |
 | GET `/notifications?page=1` | User-scoped paginated persisted notices, 20 per page |
+| GET `/push/config` | Public VAPID key for verified PWA users |
+| POST `/push/subscriptions` | `{platform: "expo", token}` or `{platform: "web", subscription: PushSubscription.toJSON()}`; binds the destination to the signed-in user |
+| POST `/push/unsubscribe` | `{destination}` removes one of the signed-in user's push destinations |
 
 A ride contains `id`, `pickupId`, `dropoffId`, `passengerCount`, `relaId`, `status`, nullable `reason`, `createdAt`, and `offerExpiresAt`. A vehicle contains `id`, `code`, `capacity`, `passengers` (onboard), `reservedSeats` (all active groups including onboard), `availableSeats`, `currentStationId`, `status` (`online`, `offline`, `full`), and `driverName`. Times use ISO 8601 for rides/state; database notice timestamps are UTC.
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\DeliverPushNotice;
 use App\Models\Ride;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -45,8 +46,13 @@ class Transport
         };
         $driver = Vehicle::findOrFail($ride->vehicle_id)->driver_id;
         foreach ([$ride->passenger_id, $driver] as $userId) {
-            DB::table('notices')->insert(['user_id' => $userId, 'ride_id' => $ride->id, 'title' => $title,
+            $noticeId = DB::table('notices')->insertGetId(['user_id' => $userId, 'ride_id' => $ride->id, 'title' => $title,
                 'detail' => $reason ?? "Ride #{$ride->id} · {$ride->passenger_count} passenger(s)", 'created_at' => now()]);
+            if ($userId !== $actor && ($status !== 'requested' || $userId === $driver)) {
+                foreach (DB::table('push_subscriptions')->where('user_id', $userId)->pluck('id') as $subscriptionId) {
+                    DeliverPushNotice::dispatch($noticeId, $subscriptionId)->afterCommit();
+                }
+            }
         }
 
         return $ride;

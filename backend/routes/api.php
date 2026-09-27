@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController as Auth;
+use App\Http\Controllers\PushSubscriptionController as Push;
 use App\Http\Controllers\TransportController as Transport;
 use App\Http\Middleware\ApiHeaders;
 use App\Http\Middleware\SessionVersion;
@@ -16,6 +17,9 @@ Route::prefix('v1')->middleware([ApiHeaders::class, 'throttle:api'])->group(func
         Route::post('auth/logout', [Auth::class, 'logout']);
         Route::post('auth/verification-notification', [Auth::class, 'resend'])->middleware('throttle:3,1');
         Route::middleware('verified')->group(function () {
+            Route::get('push/config', [Push::class, 'config']);
+            Route::post('push/subscriptions', [Push::class, 'subscribe']);
+            Route::post('push/unsubscribe', [Push::class, 'unsubscribe']);
             Route::get('stations', [Transport::class, 'stations']);
             Route::get('state', [Transport::class, 'state']);
             Route::get('rides', [Transport::class, 'history']);

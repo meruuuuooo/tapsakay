@@ -63,6 +63,10 @@ class AuthController extends Controller
 
     public function logout(Request $r): Response
     {
+        $data = $r->validate(['pushDestination' => 'nullable|string|max:2048']);
+        if (! empty($data['pushDestination'])) {
+            DB::table('push_subscriptions')->where('user_id', $r->user()->id)->where('destination_hash', hash('sha256', $data['pushDestination']))->delete();
+        }
         $token = $r->user()->currentAccessToken();
         if ($token instanceof PersonalAccessToken) {
             $token->delete();
@@ -112,6 +116,7 @@ class AuthController extends Controller
                 $u = User::whereKey($user->id)->lockForUpdate()->firstOrFail();
                 $u->forceFill(['password' => $password, 'remember_token' => Str::random(60), 'auth_version' => $u->auth_version + 1])->save();
                 $u->tokens()->delete();
+                DB::table('push_subscriptions')->where('user_id', $u->id)->delete();
                 DB::table('sessions')->where('user_id', $u->id)->delete();
                 event(new PasswordReset($u));
             });
