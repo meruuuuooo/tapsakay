@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    # Only rewrite the main domain
+    RewriteCond %{HTTP_HOST} ^(www\.)?tapsakay\.online$ [NC]
+
+    # Don't rewrite requests already going to /dist
+    RewriteCond %{REQUEST_URI} !^/dist(?:/|$) [NC]
+
+    # Don't interfere with Laravel backend
+    RewriteCond %{REQUEST_URI} !^/backend(?:/|$) [NC]
+
+    # Internally serve the Expo build from /dist
+    RewriteRule ^(.*)$ /dist/$1 [L]
+
+</IfModule>
